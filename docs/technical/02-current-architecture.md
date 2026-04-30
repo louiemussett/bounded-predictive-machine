@@ -575,6 +575,9 @@ These are not contradictions. They are the next technical documentation and impl
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - Which Prototype 2 cognitive tick phases should be adopted by Prototype 3, if any?
 - Which Prototype 2 data-model objects should become current implementation records?
 - Should Prototype 3 use JSON/JSONL as an actual requirement or only as an illustrative first-build format?

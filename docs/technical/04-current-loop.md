@@ -656,6 +656,9 @@ manual text as signal rather than command authority.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - What exact record schemas should represent each loop stage?
 - Should the current loop use a single tick record, separate records per stage,
   or both?

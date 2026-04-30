@@ -821,6 +821,9 @@ mechanics unless Prototype 3 adopts them.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - What is the minimal current action registry for the first build?
 - What fields are required for an action candidate in Prototype 3?
 - How should selected action, attempted action, and observed outcome be recorded?

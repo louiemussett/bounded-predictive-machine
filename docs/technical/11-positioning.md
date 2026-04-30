@@ -539,6 +539,9 @@ be reconstructed from records.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - What term should be standardized for the architecture: bounded predictive
   machine, bounded predictive cognitive runtime, or safety-governed predictive
   cognitive runtime?

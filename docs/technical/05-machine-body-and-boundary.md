@@ -535,8 +535,8 @@ Prototype 3 has not confirmed.
 
 Prototype 2's `15. Relationship to the Safety Canon.md` is useful inherited
 detail for the distinction between cognitive core and safety shell. Its older
-"two canons" framing should not override the corrected current hierarchy of
-three design generations.
+framing should not override the corrected current hierarchy of three design
+generations.
 
 Prototype 1's `V0 - V9/1. Foundation.md` is historical implementation lineage.
 It demonstrates a bounded state-and-trace substrate with runtime state,
@@ -559,6 +559,9 @@ mandatory current architecture.
 - Expanding capability to solve recovery failures.
 
 ## Open Questions
+
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
 
 - What exact schema should represent current body state?
 - What is the minimal boundary configuration required for the first build?

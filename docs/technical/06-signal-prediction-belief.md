@@ -800,6 +800,9 @@ technical spec adopts them.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - What is the minimal current schema for a signal record?
 - Should the first build include signal envelopes, or only simpler signal
   records with source, time, and admissibility?

@@ -626,6 +626,9 @@ developmental sequencing, but it is not the current required path.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - What programming language should the first implementation use?
 - Are JSON and JSONL required, or just the recommended first storage format?
 - What is the minimal required schema set for Prototype 3?

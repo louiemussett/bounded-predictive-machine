@@ -171,7 +171,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 concept. Exact transition rules are unresolved.
+Current Prototype 3 concept; proposed first-build record name. Exact
+transition rules are unresolved.
 ```
 
 ### PredictionRecord
@@ -195,8 +196,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 PredictionFrame and Prediction
-objects are inherited supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+PredictionFrame and Prediction objects are inherited supporting detail.
 ```
 
 ### SignalRecord
@@ -220,8 +221,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 SignalEnvelope is inherited
-supporting detail, not a mandatory current schema.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+SignalEnvelope is inherited supporting detail, not a mandatory current schema.
 ```
 
 ### InterpretationRecord
@@ -246,8 +247,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 InterpretedObservation is
-inherited supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+InterpretedObservation is inherited supporting detail.
 ```
 
 ### EvidenceQualityRecord
@@ -270,8 +271,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 PrecisionEstimate and
-WeightedPredictionError are inherited supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+PrecisionEstimate and WeightedPredictionError are inherited supporting detail.
 ```
 
 ### BeliefStateRecord
@@ -295,7 +296,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 concept. Exact belief components are unresolved.
+Current Prototype 3 concept; proposed first-build record name. Exact belief
+components are unresolved.
 ```
 
 ### BeliefUpdateRecord or NoUpdateRecord
@@ -328,8 +330,8 @@ Should capture for no update:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 BeliefUpdate is inherited
-supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+BeliefUpdate is inherited supporting detail.
 ```
 
 ### ActionCandidateRecord
@@ -353,8 +355,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 ActionCandidate is inherited
-supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+ActionCandidate is inherited supporting detail.
 ```
 
 ### SafetyCheckRecord
@@ -380,7 +382,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Exact policy fields are unresolved.
+Current Prototype 3 concept; proposed first-build record name. Exact policy
+fields are unresolved.
 ```
 
 ### SelectedActionRecord, NoActionRecord, or BlockedActionRecord
@@ -415,8 +418,8 @@ Blocked action should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 SelectedAction is inherited
-supporting detail.
+Current Prototype 3 concept; proposed first-build record names. Prototype 2
+SelectedAction is inherited supporting detail.
 ```
 
 ### OutcomeRecord
@@ -441,8 +444,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 ActionOutcome is inherited
-supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+ActionOutcome is inherited supporting detail.
 ```
 
 ### MemoryTraceRecord
@@ -469,8 +472,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 MemoryTrace is inherited
-supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+MemoryTrace is inherited supporting detail.
 ```
 
 ### UncertaintyRecord
@@ -492,8 +495,8 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 requirement. Prototype 2 metacognitive uncertainty objects
-are inherited supporting detail.
+Current Prototype 3 concept; proposed first-build record name. Prototype 2
+metacognitive uncertainty objects are inherited supporting detail.
 ```
 
 ### LoopRecord or TickRecord
@@ -525,9 +528,9 @@ Should capture:
 Status:
 
 ```text
-Current Prototype 3 needs a loop-linking record. The name `TickRecord` is
-inherited from Prototype 2 and useful, but the full Prototype 2 cognitive tick
-is not mandatory.
+Current Prototype 3 needs a loop-linking record. `LoopRecord` is the proposed
+first-build name. The name `TickRecord` is inherited from Prototype 2 and
+useful, but the full Prototype 2 cognitive tick is not mandatory.
 ```
 
 ## Relationship and Linking Rules
@@ -771,6 +774,9 @@ default.
 - Failing to link records into a reconstructable loop.
 
 ## Open Questions
+
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
 
 - Which base fields are mandatory in the first implementation?
 - Should `LoopRecord` or `TickRecord` be the current first-build name?

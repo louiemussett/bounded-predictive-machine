@@ -5,8 +5,8 @@ This directory contains technical documentation for the Bounded Predictive Machi
 The source material represents three design generations:
 
 - Prototype 3 / current design: root files directly inside `Source Documents/`.
-- Prototype 2 design: files inside `Source Documents/1-17/`.
-- Prototype 1 / original design: files inside `Source Documents/V0 - V9/`.
+- Prototype 2 / supporting prior design detail: files inside `Source Documents/1-17/`.
+- Prototype 1 / original historical implementation lineage: files inside `Source Documents/V0 - V9/`.
 
 Prototype 3 is the current source of truth. Prototype 2 provides supporting prior design detail. Prototype 1 provides original/historical implementation lineage.
 
@@ -15,8 +15,8 @@ Prototype 3 is the current source of truth. Prototype 2 provides supporting prio
 When source generations conflict, use this precedence:
 
 1. Prototype 3 current design: root files directly inside `Source Documents/`.
-2. Prototype 2 design detail: `Source Documents/1-17/`.
-3. Prototype 1 original design: `Source Documents/V0 - V9/`.
+2. Prototype 2 supporting prior design detail: `Source Documents/1-17/`.
+3. Prototype 1 original historical implementation lineage: `Source Documents/V0 - V9/`.
 
 Older material must not override newer material. If a concept appears only in Prototype 2 or Prototype 1 and is not confirmed by Prototype 3, label it as historical, inherited, supporting detail, or unresolved for the current design.
 
@@ -29,6 +29,10 @@ This documentation should preserve the current design while using older generati
 ## Source Material
 
 The documentation draws from the read-only source set in `Source Documents/`.
+
+Each technical document lists the sources it uses directly. This README gives
+the source inventory and hierarchy; the per-file `Sources Used` sections are
+the authoritative place to check detailed source usage for that document.
 
 ### Prototype 3 / Current Design
 

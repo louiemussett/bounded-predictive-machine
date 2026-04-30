@@ -13,8 +13,8 @@ This document summarizes the current design as a bounded predictive cognitive ru
 When source generations conflict, use this precedence:
 
 1. Prototype 3 current design: root files directly inside `Source Documents/`.
-2. Prototype 2 design detail: `Source Documents/1-17/`.
-3. Prototype 1 original design: `Source Documents/V0 - V9/`.
+2. Prototype 2 supporting prior design detail: `Source Documents/1-17/`.
+3. Prototype 1 original historical implementation lineage: `Source Documents/V0 - V9/`.
 
 Older material must not override newer material. If a concept appears only in Prototype 2 or Prototype 1 and is not confirmed by Prototype 3, it should be labeled as historical, inherited, supporting detail, or unresolved for the current design.
 
@@ -275,7 +275,7 @@ The current design keeps the distinction clear:
 
 Prototype 2 and Prototype 1 contain much more detailed safety/runtime machinery. That machinery should be treated as historical or inherited unless Prototype 3 confirms it.
 
-## Historical Prototype 2 Details
+## Inherited Prototype 2 Details
 
 Prototype 2 adds several detailed concepts that are useful but currently overweighted if treated as mandatory:
 
@@ -287,7 +287,7 @@ Prototype 2 adds several detailed concepts that are useful but currently overwei
 - Detailed metacognitive readiness objects.
 - Detailed schema/version/lifecycle/quarantine records.
 
-These may become current technical requirements later, but for now they should be labeled as Prototype 2 design detail unless Prototype 3 root documents explicitly retain them.
+These may become current technical requirements later, but for now they should be labeled as inherited Prototype 2 supporting detail unless Prototype 3 root documents explicitly retain them.
 
 ## Historical Prototype 1 Details
 

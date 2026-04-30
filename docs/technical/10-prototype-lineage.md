@@ -361,6 +361,9 @@ collapses into generic agent behavior.
 
 ## Open Questions
 
+This section preserves local context. Use `docs/technical/12-open-questions.md`
+as the consolidated decision tracker.
+
 - Which Prototype 2 object names should be promoted into current schemas?
 - Should the current docs standardize on `LoopRecord` or `TickRecord`?
 - Which Prototype 1 trace/runtime ideas should be retained in the first
