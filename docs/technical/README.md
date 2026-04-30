@@ -150,193 +150,26 @@ Defines the proposed minimum first-build record model, including trace records, 
 
 Explains how the three design generations relate: Prototype 1 as original V0-V9 implementation lineage, Prototype 2 as expanded cognitive prototype and inherited detail, and Prototype 3 as the current design. It also defines conflict-handling rules and citation guidance for future documentation.
 
-## Proposed Documentation Structure
+### `11-positioning.md`
 
-The broader technical documentation set should be developed as follows. Each file should use Prototype 3 sources first. Prototype 2 and Prototype 1 sources should be used only as supporting material unless their details are confirmed by Prototype 3.
+Positions Prototype 3 relative to GPT and transformer models, ChatGPT-style products, ordinary AI agents, tool orchestration systems, memory systems, safety wrappers, predictive processing, active inference, control systems, cognitive architectures, and event-sourced systems. It distinguishes model architecture from cognitive runtime architecture and avoids overclaiming novelty.
 
-### `README.md`
+### `12-open-questions.md`
 
-Purpose: provide the documentation index, source hierarchy, source precedence rule, reading order, and status of the technical documentation set.
+Collects unresolved questions across the current technical documentation set. It is a decision tracker, not a new architecture spec, and organizes questions by architecture, first-build scope, machine body and boundary, evidence pipeline, action and safety, memory and trace, records and schemas, viability and recovery, capability admission, human approval, implementation choices, testing, lineage adoption, and positioning.
 
-Prototype 3 sources:
+## Remaining Work
 
-- `Source Documents/0. Doc outline.md`
-- Root source inventory in `Source Documents/`
+The current technical-documentation phase is complete enough to support implementation planning. Remaining work should resolve the open decisions without weakening the Prototype 3 > Prototype 2 > Prototype 1 source hierarchy.
 
-Supporting older sources:
-
-- `Source Documents/1-17/00. Future outline.md`
-- `Source Documents/1-17/16. First Build Plan.md`
-
-### `01-overview.md`
-
-Purpose: define the current bounded predictive machine architecture, distinguish it from a model, chatbot, generic AI agent, safety wrapper, or memory system, and explain how older prototype sources should be read.
-
-Prototype 3 sources:
-
-- `Source Documents/0. White Paper.md`
-- `Source Documents/1. The Big Idea.md`
-- `Source Documents/2. Why This Is Not Just an AI Agent.md`
-- `Source Documents/6. Safety as the Outer Shell.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/0A. Core Cognitive Thesis.md`
-- `Source Documents/V0 - V9/0. White Paper.md`
-
-### `02-architecture.md`
-
-Purpose: describe the current architecture, including machine body, boundary, signal flow, prediction, interpretation, belief update, action, memory, safety shell, and first-build shape.
-
-Prototype 3 sources:
-
-- `Source Documents/0. White Paper.md`
-- `Source Documents/3. The Machine Body.md`
-- `Source Documents/4. Prediction, Signal, and Surprise.md`
-- `Source Documents/5. Belief, Action, and Memory.md`
-- `Source Documents/6. Safety as the Outer Shell.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/12. Cognitive Tick.md`
-- `Source Documents/1-17/13. Cognitive Data Model.md`
-- `Source Documents/V0 - V9/0. White Paper.md`
-
-### `03-core-concepts.md`
-
-Purpose: define the current technical vocabulary: bounded predictive machine, machine body, boundary, signal, prediction, surprise, precision, belief, action, memory, uncertainty, safety shell, and first build.
-
-Prototype 3 sources:
-
-- `Source Documents/1. The Big Idea.md`
-- `Source Documents/2. Why This Is Not Just an AI Agent.md`
-- `Source Documents/3. The Machine Body.md`
-- `Source Documents/4. Prediction, Signal, and Surprise.md`
-- `Source Documents/5. Belief, Action, and Memory.md`
-- `Source Documents/6. Safety as the Outer Shell.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- Relevant Prototype 2 A-series concept files in `Source Documents/1-17/`
-
-### `04-cognitive-tick.md`
-
-Purpose: specify the current cognitive loop from expectation through signal, interpretation, evidence quality, belief update, action/no-op, outcome, memory, uncertainty, and next prediction.
-
-Prototype 3 sources:
-
-- `Source Documents/4. Prediction, Signal, and Surprise.md`
-- `Source Documents/5. Belief, Action, and Memory.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/12. Cognitive Tick.md`
-- `Source Documents/1-17/16. First Build Plan.md`
-
-Note: the 26-phase tick from Prototype 2 should be treated as supporting detail unless Prototype 3 explicitly adopts that full phase structure.
-
-### `05-machine-body.md`
-
-Purpose: define the current machine body: runtime, files, permissions, memory, sensors, actions, logs, boundary, safety limits, state, trace, and viability.
-
-Prototype 3 sources:
-
-- `Source Documents/3. The Machine Body.md`
-- `Source Documents/6. Safety as the Outer Shell.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/1. Machine Body.md`
-- `Source Documents/V0 - V9/1. Foundation.md`
-
-### `06-data-model.md`
-
-Purpose: document the current data-model requirements implied by Prototype 3: records for prediction, signal, interpretation, evidence quality, belief update, action, outcome, memory, uncertainty, and traceability.
-
-Prototype 3 sources:
-
-- `Source Documents/0. White Paper.md`
-- `Source Documents/5. Belief, Action, and Memory.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/13. Cognitive Data Model.md`
-- `Source Documents/1-17/16. First Build Plan.md`
-
-Note: Prototype 2 object families and schema sketches are supporting detail, not final current schemas unless confirmed by Prototype 3.
-
-### `07-safety-model.md`
-
-Purpose: document the current safety shell: boundary, traceability, viability, capability admission, controlled action, recovery, audit, and human review.
-
-Prototype 3 sources:
-
-- `Source Documents/6. Safety as the Outer Shell.md`
-- `Source Documents/3. The Machine Body.md`
-- `Source Documents/5. Belief, Action, and Memory.md`
-- `Source Documents/7. The First Build.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/15. Relationship to the Safety Canon.md`
-- `Source Documents/V0 - V9/5. Controlled Change.md`
-- `Source Documents/V0 - V9/6. Viability.md`
-- `Source Documents/V0 - V9/7. Interfaces.md`
-- `Source Documents/V0 - V9/10. Mature System.md`
-
-### `08-implementation-plan.md`
-
-Purpose: translate the current first-build description into implementation phases while marking inherited Prototype 2 or Prototype 1 specifics as supporting details when not confirmed by Prototype 3.
-
-Prototype 3 sources:
-
-- `Source Documents/7. The First Build.md`
-- `Source Documents/3. The Machine Body.md`
-- `Source Documents/6. Safety as the Outer Shell.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/16. First Build Plan.md`
-- `Source Documents/V0 - V9/0. White Paper.md`
-
-### `09-positioning.md`
-
-Purpose: position the current design relative to transformers, GPT, AI agents, predictive processing, active inference, control systems, event-sourced systems, prior prototypes, and cognitive architectures.
-
-Prototype 3 sources:
-
-- `Source Documents/0. White Paper.md`
-- `Source Documents/0. Human brain and biology.md`
-- `Source Documents/1. The Big Idea.md`
-- `Source Documents/2. Why This Is Not Just an AI Agent.md`
-
-Supporting older sources:
-
-- `Source Documents/1-17/00. White Paper.md`
-- `Source Documents/1-17/17. Evaluation for Original Alignment.md`
-- `Source Documents/V0 - V9/0. White Paper.md`
-
-### `10-evaluation.md`
-
-Purpose: define how to evaluate whether documentation and future implementation remain aligned with Prototype 3's current design.
-
-Prototype 3 sources:
-
-- `Source Documents/0. Doc outline.md`
-- `Source Documents/7. The First Build.md`
-- Current-design principles across root `Source Documents/`
-
-Supporting older sources:
-
-- `Source Documents/1-17/14. Developmental Ladder.md`
-- `Source Documents/1-17/17. Evaluation for Original Alignment.md`
-
-Note: Prototype 2 maturity gates and alignment scorecards are supporting evaluation detail unless Prototype 3 adopts them directly.
+- Finalize schemas.
+- Choose implementation language.
+- Define safety policy.
+- Define viability transitions.
+- Define capability admission.
+- Define human approval representation.
+- Create executable tests.
+- Decide which Prototype 2 details to adopt.
 
 ## Resolved, Inherited, and Unresolved Inputs
 
