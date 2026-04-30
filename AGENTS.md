@@ -63,3 +63,20 @@ When creating technical documentation:
 - If generations conflict, prefer Prototype 3.
 - If an older detail is useful but not confirmed by Prototype 3, label it as historical, inherited, optional, or unresolved.
 
+Update AGENTS.md to include this source hierarchy:
+
+- Root files directly inside Source Documents/ = Prototype 3 / current design.
+- Source Documents/1-17/ = Prototype 2 design.
+- Source Documents/V0 - V9/ = Prototype 1 / original design.
+
+Rules:
+- Treat Prototype 3 as the current source of truth.
+- Treat Prototype 2 as supporting prior design detail.
+- Treat Prototype 1 as original/historical implementation lineage.
+- Do not flatten all generations into one current canon.
+- If generations conflict, prefer Prototype 3.
+- If an older detail is useful but not confirmed by Prototype 3, label it as historical, inherited, optional, or unresolved.
+
+Do not modify Source Documents/.
+Do not commit.
+
