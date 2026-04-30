@@ -114,6 +114,42 @@ Supporting prior-design sources used:
 - `Source Documents/1-17/16. First Build Plan.md`
 - `Source Documents/V0 - V9/0. White Paper.md`
 
+### `02-current-architecture.md`
+
+Describes the current Prototype 3 architecture as the source of truth: machine body, boundary, prediction, signal, interpretation, evidence quality, belief update, action or no-action, outcome, memory, uncertainty, safety shell, and first-build scope.
+
+### `03-core-concepts.md`
+
+Defines the core technical terms used across the documentation set, including bounded predictive machine, machine body, boundary, signal, sensor, prediction, surprise, interpretation, precision, belief, belief update, action, no-action, outcome, memory, uncertainty, safety shell, viability, and capability admission.
+
+### `04-current-loop.md`
+
+Documents the current Prototype 3 loop from current belief through prediction, signal arrival, source and boundary checks, interpretation, match or mismatch, evidence quality, scoped update or no update, action or no-action, safety check, outcome observation, memory trace, uncertainty review, and next prediction.
+
+### `05-machine-body-and-boundary.md`
+
+Defines the current Prototype 3 machine body and boundary model, including runtime identity, project boundary, files and state inside the boundary, configuration, sensors, possible actions, permissions, trace/log layer, viability, safety limits, and the difference between technical access and permission.
+
+### `06-signal-prediction-belief.md`
+
+Explains the current Prototype 3 evidence pipeline: signal as not truth, sensor limits, source and boundary checks, prediction before learning, interpretation before belief update, match/mismatch/inconclusive cases, evidence quality, scoped update, no update, uncertainty carry-forward, and bad belief updates to avoid.
+
+### `07-action-memory-safety.md`
+
+Explains the current Prototype 3 action, memory, and safety model: action as bounded expected effect rather than obedience, no-action, safety-shell checks, capability admission, boundary and permission checks, outcome observation, action learning, reconstructive memory, traceability, and failure cases.
+
+### `08-first-build-plan.md`
+
+Translates Prototype 3's "first build proves the loop" principle into an implementation-facing plan, including minimal repository layout, machine body, boundary/config files, sensors, allowed actions, loop stages, trace and memory records, viability states, safety checks, manual-text scenario, pass/fail criteria, negative tests, risks, and open questions.
+
+### `09-data-records.md`
+
+Defines the proposed minimum first-build record model, including trace records, memory traces, state records, audit/loop records, base fields, minimal record types, linking rules, an example linked record chain, invalid-record handling, and unresolved schema questions.
+
+### `10-prototype-lineage.md`
+
+Explains how the three design generations relate: Prototype 1 as original V0-V9 implementation lineage, Prototype 2 as expanded cognitive prototype and inherited detail, and Prototype 3 as the current design. It also defines conflict-handling rules and citation guidance for future documentation.
+
 ## Proposed Documentation Structure
 
 The broader technical documentation set should be developed as follows. Each file should use Prototype 3 sources first. Prototype 2 and Prototype 1 sources should be used only as supporting material unless their details are confirmed by Prototype 3.
