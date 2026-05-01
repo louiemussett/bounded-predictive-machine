@@ -38,7 +38,12 @@ def _build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     run_once = subparsers.add_parser("run-once", help="run one manual text loop")
-    run_once.add_argument("manual_text", help="manual text signal to wrap")
+    run_once.add_argument(
+        "manual_text",
+        nargs="?",
+        default="",
+        help="manual text signal to wrap",
+    )
     run_once.add_argument(
         "--summary",
         action="store_true",

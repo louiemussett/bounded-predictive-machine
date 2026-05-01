@@ -20,6 +20,30 @@ def test_cli_output_is_valid_json_by_default() -> None:
     assert parsed["signal"]["record_type"] == "SignalRecord"
 
 
+def test_cli_run_once_without_manual_text_exits_successfully() -> None:
+    result = _run_cli()
+
+    assert result.returncode == 0
+
+
+def test_cli_run_once_without_manual_text_outputs_valid_json() -> None:
+    result = _run_cli()
+
+    parsed = json.loads(result.stdout)
+
+    assert parsed["signal"]["payload"] == ""
+    assert parsed["evidence"]["quality_label"] == "inconclusive"
+    assert parsed["abstention"]["record_type"] == "AbstentionRecord"
+
+
+def test_cli_run_once_without_manual_text_summary_includes_abstention() -> None:
+    result = _run_cli("--summary")
+
+    assert result.returncode == 0
+    assert "Abstention:" in result.stdout
+    assert "not enough evidence" in result.stdout
+
+
 def test_cli_output_includes_expected_record_keys() -> None:
     result = _run_cli("bounded input")
 
@@ -108,7 +132,7 @@ def test_cli_summary_output_is_human_readable() -> None:
     assert "Memory trace:" in result.stdout
 
 
-def _run_cli(manual_text, *extra_args, cwd=None):
+def _run_cli(manual_text=None, *extra_args, cwd=None):
     repo_root = Path(__file__).resolve().parents[1]
     env = {
         **os.environ,
@@ -119,9 +143,10 @@ def _run_cli(manual_text, *extra_args, cwd=None):
         "-m",
         "bpm_runtime.main",
         "run-once",
-        manual_text,
-        *extra_args,
     ]
+    if manual_text is not None:
+        command.append(manual_text)
+    command.extend(extra_args)
     return subprocess.run(
         command,
         cwd=cwd,
