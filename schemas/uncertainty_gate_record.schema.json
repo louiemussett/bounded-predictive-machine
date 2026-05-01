@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UncertaintyGateRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "decision", "reason", "allow_belief_update", "allow_action", "evidence_quality", "interpretation_confidence", "prediction_result"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "UncertaintyGateRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "decision": { "type": ["string", "null"], "enum": ["proceed", "abstain", "clarify", null] },
+    "reason": { "type": ["string", "null"] },
+    "allow_belief_update": { "type": "boolean" },
+    "allow_action": { "type": "boolean" },
+    "evidence_quality": { "type": ["string", "null"] },
+    "interpretation_confidence": { "type": ["string", "null"] },
+    "prediction_result": { "type": ["string", "null"] }
+  }
+}

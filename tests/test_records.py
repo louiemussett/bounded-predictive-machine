@@ -2,10 +2,12 @@ import json
 
 from bpm_runtime.records import (
     ActionCandidateRecord,
+    AbstentionRecord,
     BeliefStateRecord,
     BeliefUpdateRecord,
     BlockedActionRecord,
     BodyStateRecord,
+    ClarificationRequestRecord,
     EvidenceQualityRecord,
     InterpretationRecord,
     LoopRecord,
@@ -17,6 +19,7 @@ from bpm_runtime.records import (
     SafetyCheckRecord,
     SelectedActionRecord,
     SignalRecord,
+    UncertaintyGateRecord,
     UncertaintyRecord,
     ViabilityRecord,
 )
@@ -36,6 +39,9 @@ RECORD_CLASSES = [
     SafetyCheckRecord,
     SelectedActionRecord,
     NoActionRecord,
+    UncertaintyGateRecord,
+    AbstentionRecord,
+    ClarificationRequestRecord,
     BlockedActionRecord,
     OutcomeRecord,
     MemoryTraceRecord,

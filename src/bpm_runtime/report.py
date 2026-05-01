@@ -11,7 +11,9 @@ RECORD_ORDER = [
     "signal",
     "interpretation",
     "evidence",
+    "uncertainty_gate",
     "belief_result",
+    "abstention",
     "action_result",
     "safety_check",
     "outcome",
@@ -46,7 +48,9 @@ def loop_result_to_summary(loop_result: dict[str, Any]) -> str:
             _line("Signal", records.get("signal"), "payload_summary"),
             _line("Interpretation", records.get("interpretation"), "primary_interpretation"),
             _line("Evidence quality", records.get("evidence"), "quality_label"),
+            _uncertainty_gate_line(records.get("uncertainty_gate")),
             _belief_line(records.get("belief_result")),
+            _abstention_line(records.get("abstention")),
             _action_line(records.get("action_result")),
             _safety_line(records.get("safety_check")),
             _line("Outcome", records.get("outcome"), "observed_effect"),
@@ -80,6 +84,20 @@ def _belief_line(record: dict[str, Any] | None) -> str:
         return "Belief result: not present"
     value = record.get("update_summary") or record.get("no_update_reason") or "not specified"
     return f"Belief result: {value}"
+
+
+def _uncertainty_gate_line(record: dict[str, Any] | None) -> str:
+    if record is None:
+        return "Uncertainty gate: not present"
+    value = record.get("reason") or record.get("decision") or "not specified"
+    return f"Uncertainty gate: {value}"
+
+
+def _abstention_line(record: dict[str, Any] | None) -> str:
+    if record is None:
+        return "Abstention: not present"
+    value = record.get("reason") or record.get("request") or "not specified"
+    return f"Abstention: {value}"
 
 
 def _action_line(record: dict[str, Any] | None) -> str:

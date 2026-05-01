@@ -69,6 +69,18 @@ def test_saved_jsonl_records_can_be_loaded_and_validated(tmp_path) -> None:
             validate_record_dict(json.loads(line))
 
 
+def test_uncertainty_and_abstention_records_validate(tmp_path) -> None:
+    result = run_manual_text_loop(
+        "???",
+        BeliefStateRecord(id="belief-1"),
+        boundary_config=_boundary_config(tmp_path),
+        loop_id="loop-1",
+    )
+
+    validate_record(result["uncertainty_gate"])
+    validate_record(result["abstention"])
+
+
 def _boundary_config(project_root):
     return {
         "project_root": str(project_root),

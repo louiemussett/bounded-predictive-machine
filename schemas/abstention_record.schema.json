@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AbstentionRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "reason", "gate_decision"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "AbstentionRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "reason": { "type": ["string", "null"] },
+    "gate_decision": { "type": ["string", "null"] }
+  }
+}

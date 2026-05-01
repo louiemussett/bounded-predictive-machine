@@ -32,6 +32,7 @@ def test_running_one_complete_manual_loop(tmp_path) -> None:
     assert result["signal"].record_type == "SignalRecord"
     assert result["interpretation"].record_type == "InterpretationRecord"
     assert result["evidence"].record_type == "EvidenceQualityRecord"
+    assert result["uncertainty_gate"].record_type == "UncertaintyGateRecord"
     assert result["belief_result"].record_type == "BeliefUpdateRecord"
     assert isinstance(result["action_result"], ActionCandidateRecord)
     assert result["safety_check"].record_type == "SafetyCheckRecord"
@@ -52,7 +53,9 @@ def test_returning_expected_record_keys(tmp_path) -> None:
         "signal",
         "interpretation",
         "evidence",
+        "uncertainty_gate",
         "belief_result",
+        "abstention",
         "action_result",
         "safety_check",
         "outcome",
@@ -108,8 +111,10 @@ def test_no_action_for_empty_or_unclear_text(tmp_path) -> None:
     )
 
     assert isinstance(empty_result["action_result"], NoActionRecord)
+    assert empty_result["abstention"].record_type == "AbstentionRecord"
     assert empty_result["safety_check"] is None
     assert isinstance(unclear_result["action_result"], NoActionRecord)
+    assert unclear_result["abstention"].record_type == "AbstentionRecord"
     assert unclear_result["safety_check"] is None
 
 
@@ -143,6 +148,7 @@ def test_loop_record_references_ordered_chain(tmp_path) -> None:
         result["signal"].id,
         result["interpretation"].id,
         result["evidence"].id,
+        result["uncertainty_gate"].id,
         result["belief_result"].id,
         result["action_result"].id,
         result["safety_check"].id,

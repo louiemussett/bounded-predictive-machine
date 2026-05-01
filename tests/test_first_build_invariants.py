@@ -85,9 +85,11 @@ def test_low_or_inconclusive_evidence_produces_no_update_and_no_action(tmp_path)
     assert low_result["evidence"].quality_label == "low"
     assert isinstance(low_result["belief_result"], NoUpdateRecord)
     assert isinstance(low_result["action_result"], NoActionRecord)
+    assert low_result["abstention"].record_type == "AbstentionRecord"
     assert inconclusive_result["evidence"].quality_label == "inconclusive"
     assert isinstance(inconclusive_result["belief_result"], NoUpdateRecord)
     assert isinstance(inconclusive_result["action_result"], NoActionRecord)
+    assert inconclusive_result["abstention"].record_type == "AbstentionRecord"
 
 
 def test_action_candidate_without_expected_effect_is_uncertain_and_blocked(tmp_path) -> None:
@@ -171,6 +173,7 @@ def test_loop_record_links_full_ordered_chain(tmp_path) -> None:
         result["signal"].id,
         result["interpretation"].id,
         result["evidence"].id,
+        result["uncertainty_gate"].id,
         result["belief_result"].id,
         result["action_result"].id,
         result["safety_check"].id,

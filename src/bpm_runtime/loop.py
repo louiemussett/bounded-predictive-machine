@@ -15,6 +15,11 @@ from bpm_runtime.prediction import create_prediction
 from bpm_runtime.records import LoopRecord
 from bpm_runtime.safety import evaluate_action_safety
 from bpm_runtime.signals import create_manual_text_signal
+from bpm_runtime.uncertainty import (
+    create_abstention,
+    create_clarification_request,
+    evaluate_uncertainty_gate,
+)
 
 
 def create_loop_record(
@@ -63,6 +68,11 @@ def run_manual_text_loop(
         prediction,
         loop_id=active_loop_id,
     )
+    uncertainty_gate = evaluate_uncertainty_gate(
+        evidence,
+        interpretation,
+        loop_id=active_loop_id,
+    )
     belief_result = apply_belief_update(
         prior_belief,
         evidence,
@@ -71,7 +81,21 @@ def run_manual_text_loop(
     )
 
     safety_check = None
-    if _should_create_action_candidate(manual_text, evidence, belief_result):
+    abstention_result = None
+    if uncertainty_gate.decision == "abstain":
+        abstention_result = create_abstention(
+            uncertainty_gate.reason or "not enough evidence to update or act",
+            uncertainty_gate,
+            loop_id=active_loop_id,
+        )
+    elif uncertainty_gate.decision == "clarify":
+        abstention_result = create_clarification_request(
+            uncertainty_gate.reason or "manual text requires clarification",
+            uncertainty_gate,
+            loop_id=active_loop_id,
+        )
+
+    if _should_create_action_candidate(manual_text, evidence, belief_result, uncertainty_gate):
         action_result = create_action_candidate(
             belief_result,
             action_name="write_file",
@@ -104,9 +128,12 @@ def run_manual_text_loop(
         signal,
         interpretation,
         evidence,
+        uncertainty_gate,
         belief_result,
-        action_result,
     ]
+    if abstention_result is not None:
+        memory_inputs.append(abstention_result)
+    memory_inputs.append(action_result)
     if safety_check is not None:
         memory_inputs.append(safety_check)
     memory_inputs.append(outcome)
@@ -129,7 +156,9 @@ def run_manual_text_loop(
         "signal": signal,
         "interpretation": interpretation,
         "evidence": evidence,
+        "uncertainty_gate": uncertainty_gate,
         "belief_result": belief_result,
+        "abstention": abstention_result,
         "action_result": action_result,
         "safety_check": safety_check,
         "outcome": outcome,
@@ -180,8 +209,11 @@ def _should_create_action_candidate(
     manual_text: str,
     evidence: Any,
     belief_result: Any,
+    uncertainty_gate: Any,
 ) -> bool:
     if not manual_text.strip():
+        return False
+    if not getattr(uncertainty_gate, "allow_action", False):
         return False
     if getattr(evidence, "quality_label", None) in {"low", "inconclusive"}:
         return False

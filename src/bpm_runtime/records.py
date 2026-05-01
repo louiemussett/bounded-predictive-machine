@@ -128,6 +128,29 @@ class NoActionRecord(BaseRecord):
 
 
 @dataclass
+class UncertaintyGateRecord(BaseRecord):
+    decision: str | None = None
+    reason: str | None = None
+    allow_belief_update: bool = False
+    allow_action: bool = False
+    evidence_quality: str | None = None
+    interpretation_confidence: str | None = None
+    prediction_result: str | None = None
+
+
+@dataclass
+class AbstentionRecord(BaseRecord):
+    reason: str | None = None
+    gate_decision: str | None = None
+
+
+@dataclass
+class ClarificationRequestRecord(BaseRecord):
+    request: str | None = None
+    reason: str | None = None
+
+
+@dataclass
 class BlockedActionRecord(BaseRecord):
     pass
 
