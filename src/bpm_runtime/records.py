@@ -142,7 +142,8 @@ class OutcomeRecord(BaseRecord):
 
 @dataclass
 class MemoryTraceRecord(BaseRecord):
-    pass
+    referenced_record_ids: list[str] = field(default_factory=list)
+    reconstruction_summary: str | None = None
 
 
 @dataclass
