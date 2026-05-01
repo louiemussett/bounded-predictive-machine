@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from bpm_runtime.records import BeliefUpdateRecord, NoUpdateRecord
+from bpm_runtime.scoring import confidence_update
 
 
 def apply_belief_update(
@@ -19,15 +20,36 @@ def apply_belief_update(
     quality_label = getattr(evidence_quality, "quality_label", None)
     update_target = _update_target(evidence_quality, interpretation)
     uncertainty = _uncertainty(evidence_quality)
+    evidence_score = getattr(evidence_quality, "evidence_score", None)
+    update_threshold = getattr(evidence_quality, "update_threshold", None)
+    score_allows_update = _score_allows_update(evidence_score, update_threshold)
+    confidence = confidence_update(
+        getattr(prior_belief, "posterior_confidence", None),
+        evidence_score,
+        update_threshold,
+        quality_label in {"high", "medium"} and score_allows_update,
+    )
 
-    if quality_label in {"high", "medium"}:
+    if quality_label in {"high", "medium"} and score_allows_update:
         return BeliefUpdateRecord(
             created_by="bpm_runtime.belief",
             loop_id=loop_id or getattr(evidence_quality, "loop_id", None),
             source_refs=source_refs,
             update_target=update_target,
-            update_summary=_update_summary(update_target, quality_label, interpretation),
+            update_summary=_update_summary(
+                update_target,
+                quality_label,
+                evidence_score,
+                update_threshold,
+                interpretation,
+            ),
             evidence_quality_used=quality_label,
+            evidence_score=evidence_score,
+            prior_confidence=confidence["prior_confidence"],
+            posterior_confidence=confidence["posterior_confidence"],
+            confidence_delta=confidence["confidence_delta"],
+            update_threshold=update_threshold,
+            score_components=getattr(evidence_quality, "score_components", {}) or {},
             uncertainty=uncertainty,
         )
 
@@ -36,8 +58,14 @@ def apply_belief_update(
         loop_id=loop_id or getattr(evidence_quality, "loop_id", None),
         source_refs=source_refs,
         update_target=update_target,
-        no_update_reason=_no_update_reason(quality_label),
+        no_update_reason=_no_update_reason(quality_label, evidence_score, update_threshold),
         evidence_quality_used=quality_label,
+        evidence_score=evidence_score,
+        prior_confidence=confidence["prior_confidence"],
+        posterior_confidence=confidence["posterior_confidence"],
+        confidence_delta=confidence["confidence_delta"],
+        update_threshold=update_threshold,
+        score_components=getattr(evidence_quality, "score_components", {}) or {},
         uncertainty=uncertainty,
     )
 
@@ -77,16 +105,39 @@ def _uncertainty(evidence_quality: Any) -> list[str]:
 def _update_summary(
     update_target: str | None,
     quality_label: str,
+    evidence_score: float | None,
+    update_threshold: float | None,
     interpretation: Any,
 ) -> str:
     target = update_target or "unspecified target"
     interpretation_text = getattr(interpretation, "primary_interpretation", None)
+    score_text = _score_text(evidence_score, update_threshold)
     if interpretation_text:
-        return f"{target} updated using {quality_label} evidence: {interpretation_text}"
-    return f"{target} updated using {quality_label} evidence"
+        return f"{target} updated using {quality_label} evidence ({score_text}): {interpretation_text}"
+    return f"{target} updated using {quality_label} evidence ({score_text})"
 
 
-def _no_update_reason(quality_label: str | None) -> str:
+def _no_update_reason(
+    quality_label: str | None,
+    evidence_score: float | None,
+    update_threshold: float | None,
+) -> str:
+    score_text = _score_text(evidence_score, update_threshold)
     if quality_label is None:
-        return "no update: evidence quality is missing"
-    return f"no update: evidence quality is {quality_label}"
+        return f"no update: evidence quality is missing ({score_text})"
+    if not _score_allows_update(evidence_score, update_threshold):
+        return f"no update: evidence quality is {quality_label}; score below threshold ({score_text})"
+    return f"no update: evidence quality is {quality_label} ({score_text})"
+
+
+def _score_allows_update(
+    evidence_score: float | None,
+    update_threshold: float | None,
+) -> bool:
+    if evidence_score is None or update_threshold is None:
+        return False
+    return evidence_score >= update_threshold
+
+
+def _score_text(evidence_score: float | None, update_threshold: float | None) -> str:
+    return f"score={evidence_score}, threshold={update_threshold}"

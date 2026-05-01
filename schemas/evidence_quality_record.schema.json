@@ -3,7 +3,7 @@
   "title": "EvidenceQualityRecord",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "quality_label", "reasons", "update_targets", "prediction_result"],
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "quality_label", "reasons", "update_targets", "prediction_result", "evidence_score", "update_threshold", "score_components"],
   "properties": {
     "id": { "type": "string" },
     "record_type": { "const": "EvidenceQualityRecord" },
@@ -16,6 +16,9 @@
     "quality_label": { "type": ["string", "null"], "enum": ["high", "medium", "low", "inconclusive", null] },
     "reasons": { "type": "array", "items": { "type": "string" } },
     "update_targets": { "type": "array", "items": { "type": "string" } },
-    "prediction_result": { "type": ["string", "null"] }
+    "prediction_result": { "type": ["string", "null"] },
+    "evidence_score": { "type": ["number", "null"] },
+    "update_threshold": { "type": ["number", "null"] },
+    "score_components": { "type": "object" }
   }
 }

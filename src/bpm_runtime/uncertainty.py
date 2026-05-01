@@ -19,6 +19,8 @@ def evaluate_uncertainty_gate(
     """Decide whether evidence is sufficient for update or action."""
 
     quality_label = getattr(evidence_quality, "quality_label", None)
+    evidence_score = getattr(evidence_quality, "evidence_score", None)
+    update_threshold = getattr(evidence_quality, "update_threshold", None)
     interpretation_confidence = getattr(interpretation, "interpretation_confidence", None)
     prediction_result = getattr(evidence_quality, "prediction_result", None)
     uncertainty = _uncertainty(evidence_quality, interpretation)
@@ -26,7 +28,12 @@ def evaluate_uncertainty_gate(
 
     if quality_label in {"low", "inconclusive"}:
         decision = "abstain"
-        reason = f"not enough evidence: evidence quality is {quality_label}"
+        reason = f"not enough evidence: evidence quality is {quality_label}; score below threshold ({_score_text(evidence_score, update_threshold)})"
+        allow_belief_update = False
+        allow_action = False
+    elif not _score_allows_update(evidence_score, update_threshold):
+        decision = "abstain"
+        reason = f"not enough evidence: score below threshold ({_score_text(evidence_score, update_threshold)})"
         allow_belief_update = False
         allow_action = False
     elif interpretation_confidence in {"none", "low"}:
@@ -48,7 +55,7 @@ def evaluate_uncertainty_gate(
         decision = "proceed"
         reason = "evidence is sufficient for scoped update consideration"
         allow_belief_update = True
-        allow_action = quality_label in {"high", "medium"}
+        allow_action = quality_label in {"high", "medium"} and _score_allows_update(evidence_score, update_threshold)
 
     return UncertaintyGateRecord(
         created_by="bpm_runtime.uncertainty",
@@ -114,3 +121,16 @@ def _uncertainty(evidence_quality: Any, interpretation: Any) -> list[str]:
     uncertainty.extend(getattr(evidence_quality, "uncertainty", []) or [])
     uncertainty.extend(getattr(interpretation, "uncertainty", []) or [])
     return list(dict.fromkeys(uncertainty))
+
+
+def _score_allows_update(
+    evidence_score: float | None,
+    update_threshold: float | None,
+) -> bool:
+    if evidence_score is None or update_threshold is None:
+        return False
+    return evidence_score >= update_threshold
+
+
+def _score_text(evidence_score: float | None, update_threshold: float | None) -> str:
+    return f"score={evidence_score}, threshold={update_threshold}"

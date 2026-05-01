@@ -3,7 +3,7 @@
   "title": "NoUpdateRecord",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "update_target", "no_update_reason", "evidence_quality_used"],
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "update_target", "no_update_reason", "evidence_quality_used", "evidence_score", "prior_confidence", "posterior_confidence", "confidence_delta", "update_threshold", "score_components"],
   "properties": {
     "id": { "type": "string" },
     "record_type": { "const": "NoUpdateRecord" },
@@ -15,6 +15,12 @@
     "uncertainty": { "type": "array", "items": { "type": "string" } },
     "update_target": { "type": ["string", "null"] },
     "no_update_reason": { "type": ["string", "null"] },
-    "evidence_quality_used": { "type": ["string", "null"] }
+    "evidence_quality_used": { "type": ["string", "null"] },
+    "evidence_score": { "type": ["number", "null"] },
+    "prior_confidence": { "type": ["number", "null"] },
+    "posterior_confidence": { "type": ["number", "null"] },
+    "confidence_delta": { "type": ["number", "null"] },
+    "update_threshold": { "type": ["number", "null"] },
+    "score_components": { "type": "object" }
   }
 }

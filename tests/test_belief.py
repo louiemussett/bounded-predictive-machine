@@ -9,10 +9,19 @@ from bpm_runtime.records import (
 
 
 def make_evidence(quality_label, evidence_id="evidence-1"):
+    score_by_label = {
+        "high": 0.9,
+        "medium": 0.65,
+        "low": 0.2,
+        "inconclusive": 0.0,
+    }
     return EvidenceQualityRecord(
         id=evidence_id,
         quality_label=quality_label,
         update_targets=["manual_text_signal"],
+        evidence_score=score_by_label.get(quality_label),
+        update_threshold=0.6,
+        score_components={"reason": "test score"},
         uncertainty=["target scope remains narrow"],
     )
 
@@ -45,7 +54,10 @@ def test_low_evidence_creates_no_update_record() -> None:
     update = apply_belief_update(belief, evidence)
 
     assert isinstance(update, NoUpdateRecord)
-    assert update.no_update_reason == "no update: evidence quality is low"
+    assert update.no_update_reason == (
+        "no update: evidence quality is low; score below threshold "
+        "(score=0.2, threshold=0.6)"
+    )
 
 
 def test_inconclusive_evidence_creates_no_update_record() -> None:
@@ -55,7 +67,10 @@ def test_inconclusive_evidence_creates_no_update_record() -> None:
     update = apply_belief_update(belief, evidence)
 
     assert isinstance(update, NoUpdateRecord)
-    assert update.no_update_reason == "no update: evidence quality is inconclusive"
+    assert update.no_update_reason == (
+        "no update: evidence quality is inconclusive; score below threshold "
+        "(score=0.0, threshold=0.6)"
+    )
 
 
 def test_missing_evidence_creates_no_update_record() -> None:
@@ -64,7 +79,9 @@ def test_missing_evidence_creates_no_update_record() -> None:
     update = apply_belief_update(belief, None)
 
     assert isinstance(update, NoUpdateRecord)
-    assert update.no_update_reason == "no update: evidence quality is missing"
+    assert update.no_update_reason == (
+        "no update: evidence quality is missing (score=None, threshold=None)"
+    )
     assert update.uncertainty == ["evidence quality is missing"]
 
 

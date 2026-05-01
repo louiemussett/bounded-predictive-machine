@@ -88,6 +88,9 @@ class EvidenceQualityRecord(BaseRecord):
     reasons: list[str] = field(default_factory=list)
     update_targets: list[str] = field(default_factory=list)
     prediction_result: str | None = None
+    evidence_score: float | None = None
+    update_threshold: float | None = None
+    score_components: dict[str, object] = field(default_factory=dict)
 
 
 @dataclass
@@ -95,6 +98,12 @@ class BeliefUpdateRecord(BaseRecord):
     update_target: str | None = None
     update_summary: str | None = None
     evidence_quality_used: str | None = None
+    evidence_score: float | None = None
+    prior_confidence: float | None = None
+    posterior_confidence: float | None = None
+    confidence_delta: float | None = None
+    update_threshold: float | None = None
+    score_components: dict[str, object] = field(default_factory=dict)
 
 
 @dataclass
@@ -102,6 +111,12 @@ class NoUpdateRecord(BaseRecord):
     update_target: str | None = None
     no_update_reason: str | None = None
     evidence_quality_used: str | None = None
+    evidence_score: float | None = None
+    prior_confidence: float | None = None
+    posterior_confidence: float | None = None
+    confidence_delta: float | None = None
+    update_threshold: float | None = None
+    score_components: dict[str, object] = field(default_factory=dict)
 
 
 @dataclass

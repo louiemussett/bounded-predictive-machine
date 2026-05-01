@@ -47,7 +47,7 @@ def test_empty_input_triggers_abstention_result(tmp_path) -> None:
     assert result["evidence"].quality_label == "inconclusive"
     assert result["uncertainty_gate"].decision == "abstain"
     assert result["abstention"].record_type == "AbstentionRecord"
-    assert result["abstention"].reason == (
+    assert result["abstention"].reason.startswith(
         "not enough evidence: evidence quality is inconclusive"
     )
     assert isinstance(result["belief_result"], NoUpdateRecord)

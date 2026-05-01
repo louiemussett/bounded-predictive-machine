@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from bpm_runtime.records import EvidenceQualityRecord
+from bpm_runtime.scoring import score_evidence
 
 
 def assess_evidence_quality(
@@ -19,15 +20,19 @@ def assess_evidence_quality(
     uncertainty = _uncertainty(signal, interpretation, prediction)
     prediction_result = _prediction_result(signal, interpretation, prediction)
     quality_label = _quality_label(signal, interpretation, prediction_result, uncertainty)
+    score = score_evidence(quality_label, prediction_result, uncertainty)
 
     return EvidenceQualityRecord(
         created_by="bpm_runtime.evidence",
         loop_id=loop_id or getattr(signal, "loop_id", None),
         source_refs=source_refs,
         quality_label=quality_label,
-        reasons=_reasons(quality_label, prediction_result, uncertainty),
+        reasons=_reasons(quality_label, prediction_result, uncertainty, score),
         update_targets=_update_targets(interpretation, quality_label),
         prediction_result=prediction_result,
+        evidence_score=score["evidence_score"],
+        update_threshold=score["update_threshold"],
+        score_components=score["score_components"],
         uncertainty=uncertainty,
     )
 
@@ -106,8 +111,14 @@ def _reasons(
     quality_label: str,
     prediction_result: str,
     uncertainty: list[str],
+    score: dict[str, Any],
 ) -> list[str]:
-    reasons = [f"quality label is {quality_label}", f"prediction result is {prediction_result}"]
+    reasons = [
+        f"quality label is {quality_label}",
+        f"prediction result is {prediction_result}",
+        f"evidence score is {score['evidence_score']}",
+        f"update threshold is {score['update_threshold']}",
+    ]
     reasons.extend(uncertainty)
     return reasons
 
