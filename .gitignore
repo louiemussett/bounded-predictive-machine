@@ -16,3 +16,6 @@ __pycache__/
 
 # Runtime trace output
 traces/*.jsonl
+
+# Python package metadata
+*.egg-info/
