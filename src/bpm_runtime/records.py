@@ -76,7 +76,10 @@ class SignalRecord(BaseRecord):
 
 @dataclass
 class InterpretationRecord(BaseRecord):
-    pass
+    primary_interpretation: str | None = None
+    alternative_interpretations: list[str] = field(default_factory=list)
+    relevant_belief_targets: list[str] = field(default_factory=list)
+    interpretation_confidence: str | None = None
 
 
 @dataclass
