@@ -153,4 +153,5 @@ class UncertaintyRecord(BaseRecord):
 
 @dataclass
 class LoopRecord(BaseRecord):
-    pass
+    ordered_record_ids: list[str] = field(default_factory=list)
+    record_types: list[str] = field(default_factory=list)
