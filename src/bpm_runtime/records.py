@@ -189,6 +189,7 @@ class MemoryRetrievalRecord(BaseRecord):
     query: str | None = None
     match_count: int = 0
     matched_record_ids: list[str] = field(default_factory=list)
+    matched_record_types: list[str] = field(default_factory=list)
 
 
 @dataclass

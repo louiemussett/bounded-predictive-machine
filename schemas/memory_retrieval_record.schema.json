@@ -3,7 +3,7 @@
   "title": "MemoryRetrievalRecord",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "query", "match_count", "matched_record_ids"],
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "query", "match_count", "matched_record_ids", "matched_record_types"],
   "properties": {
     "id": { "type": "string" },
     "record_type": { "const": "MemoryRetrievalRecord" },
@@ -15,6 +15,7 @@
     "uncertainty": { "type": "array", "items": { "type": "string" } },
     "query": { "type": ["string", "null"] },
     "match_count": { "type": "integer" },
-    "matched_record_ids": { "type": "array", "items": { "type": "string" } }
+    "matched_record_ids": { "type": "array", "items": { "type": "string" } },
+    "matched_record_types": { "type": "array", "items": { "type": "string" } }
   }
 }

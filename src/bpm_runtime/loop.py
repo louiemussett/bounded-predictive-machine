@@ -13,7 +13,11 @@ from bpm_runtime.memory import create_memory_trace
 from bpm_runtime.outcome import create_outcome
 from bpm_runtime.prediction import create_prediction
 from bpm_runtime.records import LoopRecord
-from bpm_runtime.retrieval import create_memory_retrieval_record, search_memory_records
+from bpm_runtime.retrieval import (
+    DEFAULT_MAX_RESULTS,
+    create_memory_retrieval_record,
+    search_memory_records,
+)
 from bpm_runtime.safety import evaluate_action_safety
 from bpm_runtime.signals import create_manual_text_signal
 from bpm_runtime.uncertainty import (
@@ -51,6 +55,7 @@ def run_manual_text_loop(
     loop_id: str | None = None,
     use_memory: bool = False,
     trace_dir: str = "traces",
+    memory_max_results: int = DEFAULT_MAX_RESULTS,
 ) -> dict[str, Any]:
     """Run one deterministic manual-text loop without persistence or execution."""
 
@@ -66,7 +71,11 @@ def run_manual_text_loop(
     signal = create_manual_text_signal(manual_text, loop_id=active_loop_id)
     memory_retrieval = None
     if use_memory:
-        retrieval_results = search_memory_records(manual_text, trace_dir=trace_dir)
+        retrieval_results = search_memory_records(
+            manual_text,
+            trace_dir=trace_dir,
+            max_results=memory_max_results,
+        )
         memory_retrieval = create_memory_retrieval_record(
             manual_text,
             retrieval_results,

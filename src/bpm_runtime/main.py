@@ -27,6 +27,7 @@ def main(argv: list[str] | None = None) -> int:
             prior_belief,
             use_memory=args.use_memory,
             trace_dir=args.trace_dir,
+            memory_max_results=args.memory_max_results,
         )
         if args.save:
             save_loop_result_jsonl(loop_result)
@@ -42,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
             trace_dir=args.trace_dir,
             record_type=args.record_type,
             loop_id=args.loop_id,
+            max_results=args.max_results,
         )
         print(json.dumps(results, indent=2, sort_keys=True))
         return 0
@@ -77,6 +79,12 @@ def _build_parser() -> argparse.ArgumentParser:
         help="retrieve local prior trace records as context",
     )
     run_once.add_argument("--trace-dir", default="traces", help="trace directory")
+    run_once.add_argument(
+        "--memory-max-results",
+        type=int,
+        default=5,
+        help="maximum memory matches to include when --use-memory is set",
+    )
 
     memory_search = subparsers.add_parser(
         "memory-search",
@@ -86,6 +94,12 @@ def _build_parser() -> argparse.ArgumentParser:
     memory_search.add_argument("--trace-dir", default="traces", help="trace directory")
     memory_search.add_argument("--record-type", default=None, help="filter by record_type")
     memory_search.add_argument("--loop-id", default=None, help="filter by loop_id")
+    memory_search.add_argument(
+        "--max-results",
+        type=int,
+        default=5,
+        help="maximum memory search results to return",
+    )
 
     return parser
 

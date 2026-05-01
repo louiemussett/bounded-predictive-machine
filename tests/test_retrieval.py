@@ -64,6 +64,44 @@ def test_punctuation_only_query_returns_zero_matches(tmp_path) -> None:
     assert results == []
 
 
+def test_default_retrieval_returns_no_more_than_default_max_results(tmp_path) -> None:
+    for index in range(6):
+        _save_loop(tmp_path, f"loop-{index}", f"shared vague topic {index}")
+
+    results = search_memory_records("vague", trace_dir=tmp_path / "traces")
+
+    assert len(results) <= 5
+
+
+def test_max_results_limits_results(tmp_path) -> None:
+    for index in range(4):
+        _save_loop(tmp_path, f"loop-{index}", f"shared vague topic {index}")
+
+    results = search_memory_records("vague", trace_dir=tmp_path / "traces", max_results=2)
+
+    assert len(results) == 2
+
+
+def test_results_are_deterministically_ordered_by_token_count_then_stable_fields(tmp_path) -> None:
+    _append_record(tmp_path, "record-b", "2026-05-01T00:00:02+00:00", "vague")
+    _append_record(tmp_path, "record-a", "2026-05-01T00:00:01+00:00", "vague section")
+
+    results = search_memory_records("vague section", trace_dir=tmp_path / "traces", max_results=5)
+
+    assert [result["source_record_id"] for result in results] == ["record-a", "record-b"]
+    assert results[0]["match_token_count"] == 2
+    assert results[1]["match_token_count"] == 1
+
+
+def test_duplicate_source_record_ids_are_not_returned(tmp_path) -> None:
+    _append_record(tmp_path, "duplicate-1", "2026-05-01T00:00:01+00:00", "vague")
+    _append_record(tmp_path, "duplicate-1", "2026-05-01T00:00:02+00:00", "vague")
+
+    results = search_memory_records("vague", trace_dir=tmp_path / "traces")
+
+    assert [result["source_record_id"] for result in results] == ["duplicate-1"]
+
+
 def test_loop_id_filtering_works(tmp_path) -> None:
     _save_loop(tmp_path, "loop-a", "alpha topic")
     _save_loop(tmp_path, "loop-b", "beta topic")
@@ -93,6 +131,16 @@ def test_cli_memory_search_works(tmp_path) -> None:
     assert any(match["source_record_id"] for match in parsed)
 
 
+def test_cli_memory_search_max_results_limits_results(tmp_path) -> None:
+    for index in range(4):
+        _run_cli("run-once", f"shared vague topic {index}", "--save", cwd=tmp_path)
+
+    result = _run_cli("memory-search", "vague", "--max-results", "2", cwd=tmp_path)
+
+    assert result.returncode == 0
+    assert len(json.loads(result.stdout)) == 2
+
+
 def test_cli_memory_search_handles_missing_traces_gracefully(tmp_path) -> None:
     result = _run_cli("memory-search", "vague", cwd=tmp_path)
 
@@ -108,6 +156,24 @@ def _save_loop(tmp_path, loop_id, manual_text):
         loop_id=loop_id,
     )
     save_loop_result_jsonl(result, trace_dir=tmp_path / "traces")
+
+
+def _append_record(tmp_path, record_id, created_at, payload):
+    trace_dir = tmp_path / "traces"
+    trace_dir.mkdir(parents=True, exist_ok=True)
+    record = {
+        "id": record_id,
+        "record_type": "SignalRecord",
+        "created_at": created_at,
+        "created_by": "test",
+        "loop_id": "loop-test",
+        "status": "created",
+        "source_refs": [],
+        "uncertainty": [],
+        "payload": payload,
+    }
+    with (trace_dir / "events.jsonl").open("a", encoding="utf-8") as trace_file:
+        trace_file.write(json.dumps(record) + "\n")
 
 
 def _boundary_config(project_root):

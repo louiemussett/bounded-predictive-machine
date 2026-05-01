@@ -92,6 +92,9 @@ def _belief_line(record: dict[str, Any] | None) -> str:
 def _memory_retrieval_line(record: dict[str, Any] | None) -> str:
     if record is None:
         return "Memory retrieval: not used"
+    record_types = record.get("matched_record_types", [])
+    if record_types:
+        return f"Memory retrieval: {record.get('match_count', 0)} match(es); top types: {', '.join(record_types)}"
     return f"Memory retrieval: {record.get('match_count', 0)} match(es)"
 
 

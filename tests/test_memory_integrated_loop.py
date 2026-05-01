@@ -122,6 +122,42 @@ def test_cli_run_once_use_memory_json_includes_retrieval(tmp_path) -> None:
     assert parsed["memory_retrieval"]["record_type"] == "MemoryRetrievalRecord"
 
 
+def test_run_once_use_memory_max_results_limits_retrieval(tmp_path) -> None:
+    for index in range(4):
+        _save_prior_loop(tmp_path, f"shared vague topic {index}")
+
+    result = run_manual_text_loop(
+        "vague",
+        BeliefStateRecord(id="belief-2"),
+        boundary_config=_boundary_config(tmp_path),
+        loop_id="loop-2",
+        use_memory=True,
+        trace_dir=str(tmp_path / "traces"),
+        memory_max_results=2,
+    )
+
+    assert result["memory_retrieval"].match_count == 2
+    assert len(result["memory_retrieval"].matched_record_ids) == 2
+
+
+def test_cli_run_once_use_memory_max_results_limits_retrieval(tmp_path) -> None:
+    for index in range(4):
+        _run_cli("run-once", f"shared vague topic {index}", "--save", cwd=tmp_path)
+
+    result = _run_cli(
+        "run-once",
+        "vague",
+        "--use-memory",
+        "--memory-max-results",
+        "2",
+        cwd=tmp_path,
+    )
+
+    parsed = json.loads(result.stdout)
+    assert parsed["memory_retrieval"]["match_count"] == 2
+    assert len(parsed["memory_retrieval"]["matched_record_ids"]) == 2
+
+
 def _save_prior_loop(tmp_path, manual_text):
     result = run_manual_text_loop(
         manual_text,
