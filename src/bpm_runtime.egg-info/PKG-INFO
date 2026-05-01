@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: bpm-runtime
+Version: 0.0.0
+Summary: First-build skeleton for a bounded predictive machine runtime.
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+
+# Project 1
+
+## First-build runtime skeleton
+
+This repository now includes the minimal Python skeleton for the Bounded
+Predictive Machine first build. The runtime package lives under
+`src/bpm_runtime/`; configuration, state, trace, and schema directories are
+reserved at the repository root.
