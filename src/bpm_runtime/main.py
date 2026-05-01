@@ -7,6 +7,7 @@ import argparse
 from bpm_runtime.loop import run_manual_text_loop
 from bpm_runtime.records import BeliefStateRecord
 from bpm_runtime.report import loop_result_to_json, loop_result_to_summary
+from bpm_runtime.trace import save_loop_result_jsonl
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -20,6 +21,8 @@ def main(argv: list[str] | None = None) -> int:
             uncertainty=["CLI prior belief is minimal"],
         )
         loop_result = run_manual_text_loop(args.manual_text, prior_belief)
+        if args.save:
+            save_loop_result_jsonl(loop_result)
         if args.summary:
             print(loop_result_to_summary(loop_result))
         else:
@@ -40,6 +43,11 @@ def _build_parser() -> argparse.ArgumentParser:
         "--summary",
         action="store_true",
         help="print a concise record-backed summary instead of JSON",
+    )
+    run_once.add_argument(
+        "--save",
+        action="store_true",
+        help="persist loop records to JSONL files under traces/",
     )
 
     return parser

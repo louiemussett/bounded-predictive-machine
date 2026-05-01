@@ -1,7 +1,9 @@
 import json
 
 from bpm_runtime.records import BodyStateRecord, SignalRecord
-from bpm_runtime.trace import append_jsonl_record
+from bpm_runtime.loop import create_loop_record
+from bpm_runtime.memory import create_memory_trace
+from bpm_runtime.trace import append_jsonl_record, save_loop_result_jsonl
 
 
 def read_jsonl(path):
@@ -57,3 +59,26 @@ def test_each_line_is_valid_json(tmp_path) -> None:
     for line in read_jsonl(trace_path):
         parsed = json.loads(line)
         assert isinstance(parsed, dict)
+
+
+def test_save_loop_result_routes_records_to_jsonl_files(tmp_path) -> None:
+    signal = SignalRecord(id="signal-1")
+    memory_trace = create_memory_trace([signal], loop_id="loop-1")
+    loop_record = create_loop_record([signal, memory_trace], loop_id="loop-1")
+
+    save_loop_result_jsonl(
+        {
+            "signal": signal,
+            "memory_trace": memory_trace,
+            "loop_record": loop_record,
+        },
+        trace_dir=tmp_path / "traces",
+    )
+
+    events = [json.loads(line) for line in read_jsonl(tmp_path / "traces" / "events.jsonl")]
+    memory = [json.loads(line) for line in read_jsonl(tmp_path / "traces" / "memory.jsonl")]
+    loops = [json.loads(line) for line in read_jsonl(tmp_path / "traces" / "loops.jsonl")]
+
+    assert [record["record_type"] for record in events] == ["SignalRecord"]
+    assert [record["record_type"] for record in memory] == ["MemoryTraceRecord"]
+    assert [record["record_type"] for record in loops] == ["LoopRecord"]

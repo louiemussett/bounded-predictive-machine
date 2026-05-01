@@ -46,7 +46,54 @@ def test_cli_does_not_write_files(tmp_path) -> None:
 
     assert result.returncode == 0
     assert not target_path.exists()
-    assert not (tmp_path / "traces" / "loop.jsonl").exists()
+    assert not (tmp_path / "traces" / "events.jsonl").exists()
+    assert not (tmp_path / "traces" / "loops.jsonl").exists()
+    assert not (tmp_path / "traces" / "memory.jsonl").exists()
+
+
+def test_cli_save_writes_jsonl_trace_files(tmp_path) -> None:
+    result = _run_cli("bounded input", "--save", cwd=tmp_path)
+
+    assert result.returncode == 0
+    assert (tmp_path / "traces" / "events.jsonl").exists()
+    assert (tmp_path / "traces" / "loops.jsonl").exists()
+    assert (tmp_path / "traces" / "memory.jsonl").exists()
+
+
+def test_cli_saved_jsonl_lines_are_valid_json(tmp_path) -> None:
+    result = _run_cli("bounded input", "--save", cwd=tmp_path)
+
+    assert result.returncode == 0
+    for trace_file in [
+        tmp_path / "traces" / "events.jsonl",
+        tmp_path / "traces" / "loops.jsonl",
+        tmp_path / "traces" / "memory.jsonl",
+    ]:
+        for line in trace_file.read_text(encoding="utf-8").splitlines():
+            assert isinstance(json.loads(line), dict)
+
+
+def test_cli_save_routes_records_by_type(tmp_path) -> None:
+    result = _run_cli("bounded input", "--save", cwd=tmp_path)
+
+    assert result.returncode == 0
+    event_records = _read_jsonl(tmp_path / "traces" / "events.jsonl")
+    loop_records = _read_jsonl(tmp_path / "traces" / "loops.jsonl")
+    memory_records = _read_jsonl(tmp_path / "traces" / "memory.jsonl")
+
+    assert all(record["record_type"] != "LoopRecord" for record in event_records)
+    assert all(record["record_type"] != "MemoryTraceRecord" for record in event_records)
+    assert [record["record_type"] for record in loop_records] == ["LoopRecord"]
+    assert [record["record_type"] for record in memory_records] == ["MemoryTraceRecord"]
+
+
+def test_cli_save_never_writes_source_documents(tmp_path) -> None:
+    source_documents = tmp_path / "Source Documents"
+
+    result = _run_cli("bounded input", "--save", cwd=tmp_path)
+
+    assert result.returncode == 0
+    assert not source_documents.exists()
 
 
 def test_cli_summary_output_is_human_readable() -> None:
@@ -81,3 +128,7 @@ def _run_cli(manual_text, *extra_args, cwd=None):
         capture_output=True,
         check=False,
     )
+
+
+def _read_jsonl(path):
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
