@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OutcomeRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "action_ref", "observed_effect", "success", "unresolved_questions"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "OutcomeRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "action_ref": { "type": ["string", "null"] },
+    "observed_effect": { "type": ["string", "null"] },
+    "success": { "type": ["boolean", "null"] },
+    "unresolved_questions": { "type": "array", "items": { "type": "string" } }
+  }
+}

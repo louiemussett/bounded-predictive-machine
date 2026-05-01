@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InterpretationRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "primary_interpretation", "alternative_interpretations", "relevant_belief_targets", "interpretation_confidence"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "InterpretationRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "primary_interpretation": { "type": ["string", "null"] },
+    "alternative_interpretations": { "type": "array", "items": { "type": "string" } },
+    "relevant_belief_targets": { "type": "array", "items": { "type": "string" } },
+    "interpretation_confidence": { "type": ["string", "null"] }
+  }
+}

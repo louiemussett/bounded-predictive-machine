@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PredictionRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "target", "expected", "match_conditions"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "PredictionRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "target": { "type": ["string", "null"] },
+    "expected": { "type": ["string", "null"] },
+    "match_conditions": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActionCandidateRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "action_name", "expected_effect", "target_path", "reason"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "ActionCandidateRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "action_name": { "type": ["string", "null"] },
+    "expected_effect": { "type": ["string", "null"] },
+    "target_path": { "type": ["string", "null"] },
+    "reason": { "type": ["string", "null"] }
+  }
+}

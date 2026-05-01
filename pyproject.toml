@@ -4,6 +4,7 @@ version = "0.0.0"
 description = "First-build skeleton for a bounded predictive machine runtime."
 readme = "README.md"
 requires-python = ">=3.11"
+dependencies = ["jsonschema>=4"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

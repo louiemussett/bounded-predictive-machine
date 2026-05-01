@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SignalRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "source", "payload", "payload_summary", "boundary_status", "admissibility_status"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "SignalRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "source": { "type": ["string", "null"] },
+    "payload": { "type": ["string", "null"] },
+    "payload_summary": { "type": ["string", "null"] },
+    "boundary_status": { "type": ["string", "null"] },
+    "admissibility_status": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidenceQualityRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "quality_label", "reasons", "update_targets", "prediction_result"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "EvidenceQualityRecord" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "quality_label": { "type": ["string", "null"], "enum": ["high", "medium", "low", "inconclusive", null] },
+    "reasons": { "type": "array", "items": { "type": "string" } },
+    "update_targets": { "type": "array", "items": { "type": "string" } },
+    "prediction_result": { "type": ["string", "null"] }
+  }
+}
