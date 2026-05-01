@@ -60,12 +60,18 @@ class BeliefStateRecord(BaseRecord):
 
 @dataclass
 class PredictionRecord(BaseRecord):
-    pass
+    target: str | None = None
+    expected: str | None = None
+    match_conditions: list[str] = field(default_factory=list)
 
 
 @dataclass
 class SignalRecord(BaseRecord):
-    pass
+    source: str | None = None
+    payload: str | None = None
+    payload_summary: str | None = None
+    boundary_status: str | None = None
+    admissibility_status: str | None = None
 
 
 @dataclass

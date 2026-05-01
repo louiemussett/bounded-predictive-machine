@@ -81,6 +81,9 @@ def test_serialization_to_dict() -> None:
         "status": "created",
         "source_refs": ["belief-1"],
         "uncertainty": ["manual signal not yet observed"],
+        "target": None,
+        "expected": None,
+        "match_conditions": [],
     }
 
 
