@@ -84,7 +84,10 @@ class InterpretationRecord(BaseRecord):
 
 @dataclass
 class EvidenceQualityRecord(BaseRecord):
-    pass
+    quality_label: str | None = None
+    reasons: list[str] = field(default_factory=list)
+    update_targets: list[str] = field(default_factory=list)
+    prediction_result: str | None = None
 
 
 @dataclass
