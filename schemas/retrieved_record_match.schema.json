@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RetrievedRecordMatch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "created_at", "created_by", "loop_id", "status", "source_refs", "uncertainty", "matched_record_id", "matched_record_type", "match_reason", "matched_fields"],
+  "properties": {
+    "id": { "type": "string" },
+    "record_type": { "const": "RetrievedRecordMatch" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "loop_id": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "uncertainty": { "type": "array", "items": { "type": "string" } },
+    "matched_record_id": { "type": ["string", "null"] },
+    "matched_record_type": { "type": ["string", "null"] },
+    "match_reason": { "type": ["string", "null"] },
+    "matched_fields": { "type": "array", "items": { "type": "string" } }
+  }
+}

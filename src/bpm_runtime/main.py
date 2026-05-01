@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import json
 
 from bpm_runtime.loop import run_manual_text_loop
 from bpm_runtime.records import BeliefStateRecord
+from bpm_runtime.retrieval import search_memory_records
 from bpm_runtime.report import loop_result_to_json, loop_result_to_summary
 from bpm_runtime.trace import save_loop_result_jsonl
 
@@ -27,6 +29,16 @@ def main(argv: list[str] | None = None) -> int:
             print(loop_result_to_summary(loop_result))
         else:
             print(loop_result_to_json(loop_result))
+        return 0
+
+    if args.command == "memory-search":
+        results = search_memory_records(
+            args.query,
+            trace_dir=args.trace_dir,
+            record_type=args.record_type,
+            loop_id=args.loop_id,
+        )
+        print(json.dumps(results, indent=2, sort_keys=True))
         return 0
 
     parser.error("unknown command")
@@ -54,6 +66,15 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="persist loop records to JSONL files under traces/",
     )
+
+    memory_search = subparsers.add_parser(
+        "memory-search",
+        help="search local JSONL traces without embeddings",
+    )
+    memory_search.add_argument("query", nargs="?", default="", help="keyword to search")
+    memory_search.add_argument("--trace-dir", default="traces", help="trace directory")
+    memory_search.add_argument("--record-type", default=None, help="filter by record_type")
+    memory_search.add_argument("--loop-id", default=None, help="filter by loop_id")
 
     return parser
 

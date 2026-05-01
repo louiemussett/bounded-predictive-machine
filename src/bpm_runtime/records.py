@@ -185,6 +185,21 @@ class MemoryTraceRecord(BaseRecord):
 
 
 @dataclass
+class MemoryRetrievalRecord(BaseRecord):
+    query: str | None = None
+    match_count: int = 0
+    matched_record_ids: list[str] = field(default_factory=list)
+
+
+@dataclass
+class RetrievedRecordMatch(BaseRecord):
+    matched_record_id: str | None = None
+    matched_record_type: str | None = None
+    match_reason: str | None = None
+    matched_fields: list[str] = field(default_factory=list)
+
+
+@dataclass
 class UncertaintyRecord(BaseRecord):
     pass
 

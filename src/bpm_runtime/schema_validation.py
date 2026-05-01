@@ -24,6 +24,8 @@ SCHEMA_FILES = {
     "SafetyCheckRecord": "safety_check_record.schema.json",
     "OutcomeRecord": "outcome_record.schema.json",
     "MemoryTraceRecord": "memory_trace_record.schema.json",
+    "MemoryRetrievalRecord": "memory_retrieval_record.schema.json",
+    "RetrievedRecordMatch": "retrieved_record_match.schema.json",
     "LoopRecord": "loop_record.schema.json",
 }
 
