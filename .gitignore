@@ -13,3 +13,6 @@ __pycache__/
 __pycache__/
 .pytest_cache/
 *.pyc
+
+# Runtime trace output
+traces/*.jsonl
