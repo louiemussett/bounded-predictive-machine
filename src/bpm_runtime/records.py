@@ -106,7 +106,10 @@ class NoUpdateRecord(BaseRecord):
 
 @dataclass
 class ActionCandidateRecord(BaseRecord):
-    pass
+    action_name: str | None = None
+    expected_effect: str | None = None
+    target_path: str | None = None
+    reason: str | None = None
 
 
 @dataclass
@@ -121,7 +124,7 @@ class SelectedActionRecord(BaseRecord):
 
 @dataclass
 class NoActionRecord(BaseRecord):
-    pass
+    reason: str | None = None
 
 
 @dataclass
