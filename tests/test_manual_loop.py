@@ -61,6 +61,25 @@ def test_returning_expected_record_keys(tmp_path) -> None:
     }
 
 
+def test_prediction_expected_does_not_equal_manual_text_input(tmp_path) -> None:
+    manual_text = "exact operator payload should not become the prediction"
+
+    result = run_manual_text_loop(
+        manual_text,
+        BeliefStateRecord(id="belief-1"),
+        boundary_config=make_boundary_config(tmp_path),
+        loop_id="loop-1",
+    )
+
+    assert result["prediction"].target == "manual_text_signal"
+    assert result["prediction"].expected != manual_text
+    assert result["prediction"].expected == (
+        "manual text signal may contain feedback, clarification, or an "
+        "update-relevant observation"
+    )
+    assert manual_text not in result["prediction"].match_conditions[0]
+
+
 def test_preserving_same_loop_id_across_records(tmp_path) -> None:
     result = run_manual_text_loop(
         "bounded input",

@@ -47,13 +47,12 @@ def run_manual_text_loop(
     """Run one deterministic manual-text loop without persistence or execution."""
 
     active_loop_id = loop_id or f"loop-{uuid4()}"
-    expected = manual_text.strip() or None
     boundary = boundary_config or _default_boundary_config()
 
     prediction = create_prediction(
         prior_belief,
         target="manual_text_signal",
-        expected=expected,
+        expected="manual text signal may contain feedback, clarification, or an update-relevant observation",
         loop_id=active_loop_id,
     )
     signal = create_manual_text_signal(manual_text, loop_id=active_loop_id)
