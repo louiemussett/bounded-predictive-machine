@@ -92,12 +92,16 @@ class EvidenceQualityRecord(BaseRecord):
 
 @dataclass
 class BeliefUpdateRecord(BaseRecord):
-    pass
+    update_target: str | None = None
+    update_summary: str | None = None
+    evidence_quality_used: str | None = None
 
 
 @dataclass
 class NoUpdateRecord(BaseRecord):
-    pass
+    update_target: str | None = None
+    no_update_reason: str | None = None
+    evidence_quality_used: str | None = None
 
 
 @dataclass
