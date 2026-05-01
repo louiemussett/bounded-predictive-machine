@@ -134,7 +134,10 @@ class BlockedActionRecord(BaseRecord):
 
 @dataclass
 class OutcomeRecord(BaseRecord):
-    pass
+    action_ref: str | None = None
+    observed_effect: str | None = None
+    success: bool | None = None
+    unresolved_questions: list[str] = field(default_factory=list)
 
 
 @dataclass
