@@ -30,6 +30,7 @@ def test_running_one_complete_manual_loop(tmp_path) -> None:
 
     assert result["prediction"].record_type == "PredictionRecord"
     assert result["signal"].record_type == "SignalRecord"
+    assert result["memory_retrieval"] is None
     assert result["interpretation"].record_type == "InterpretationRecord"
     assert result["evidence"].record_type == "EvidenceQualityRecord"
     assert result["uncertainty_gate"].record_type == "UncertaintyGateRecord"
@@ -51,6 +52,7 @@ def test_returning_expected_record_keys(tmp_path) -> None:
     assert set(result) == {
         "prediction",
         "signal",
+        "memory_retrieval",
         "interpretation",
         "evidence",
         "uncertainty_gate",

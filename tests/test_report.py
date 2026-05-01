@@ -18,6 +18,7 @@ def test_loop_result_to_json_contains_expected_record_keys(tmp_path) -> None:
     assert set(rendered) == {
         "prediction",
         "signal",
+        "memory_retrieval",
         "interpretation",
         "evidence",
         "uncertainty_gate",

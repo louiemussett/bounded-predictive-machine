@@ -47,6 +47,23 @@ def test_keyword_search_works(tmp_path) -> None:
     assert any("payload" in result["matched_fields"] for result in results)
 
 
+def test_multi_word_query_matches_any_meaningful_token(tmp_path) -> None:
+    _save_loop(tmp_path, "loop-1", "The current section is too vague.")
+
+    results = search_memory_records("vague section", trace_dir=tmp_path / "traces")
+
+    assert results
+    assert any("payload" in result["matched_fields"] for result in results)
+
+
+def test_punctuation_only_query_returns_zero_matches(tmp_path) -> None:
+    _save_loop(tmp_path, "loop-1", "The current section is too vague.")
+
+    results = search_memory_records("???", trace_dir=tmp_path / "traces")
+
+    assert results == []
+
+
 def test_loop_id_filtering_works(tmp_path) -> None:
     _save_loop(tmp_path, "loop-a", "alpha topic")
     _save_loop(tmp_path, "loop-b", "beta topic")

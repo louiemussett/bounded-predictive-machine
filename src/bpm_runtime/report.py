@@ -9,6 +9,7 @@ from typing import Any
 RECORD_ORDER = [
     "prediction",
     "signal",
+    "memory_retrieval",
     "interpretation",
     "evidence",
     "uncertainty_gate",
@@ -46,6 +47,7 @@ def loop_result_to_summary(loop_result: dict[str, Any]) -> str:
         [
             _line("Prediction", records.get("prediction"), "expected"),
             _line("Signal", records.get("signal"), "payload_summary"),
+            _memory_retrieval_line(records.get("memory_retrieval")),
             _line("Interpretation", records.get("interpretation"), "primary_interpretation"),
             _line("Evidence quality", records.get("evidence"), "quality_label"),
             _score_line(records.get("evidence")),
@@ -85,6 +87,12 @@ def _belief_line(record: dict[str, Any] | None) -> str:
         return "Belief result: not present"
     value = record.get("update_summary") or record.get("no_update_reason") or "not specified"
     return f"Belief result: {value}"
+
+
+def _memory_retrieval_line(record: dict[str, Any] | None) -> str:
+    if record is None:
+        return "Memory retrieval: not used"
+    return f"Memory retrieval: {record.get('match_count', 0)} match(es)"
 
 
 def _score_line(record: dict[str, Any] | None) -> str:

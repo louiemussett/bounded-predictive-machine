@@ -13,6 +13,7 @@ from bpm_runtime.memory import create_memory_trace
 from bpm_runtime.outcome import create_outcome
 from bpm_runtime.prediction import create_prediction
 from bpm_runtime.records import LoopRecord
+from bpm_runtime.retrieval import create_memory_retrieval_record, search_memory_records
 from bpm_runtime.safety import evaluate_action_safety
 from bpm_runtime.signals import create_manual_text_signal
 from bpm_runtime.uncertainty import (
@@ -48,6 +49,8 @@ def run_manual_text_loop(
     prior_belief: Any,
     boundary_config: dict[str, Any] | None = None,
     loop_id: str | None = None,
+    use_memory: bool = False,
+    trace_dir: str = "traces",
 ) -> dict[str, Any]:
     """Run one deterministic manual-text loop without persistence or execution."""
 
@@ -61,6 +64,14 @@ def run_manual_text_loop(
         loop_id=active_loop_id,
     )
     signal = create_manual_text_signal(manual_text, loop_id=active_loop_id)
+    memory_retrieval = None
+    if use_memory:
+        retrieval_results = search_memory_records(manual_text, trace_dir=trace_dir)
+        memory_retrieval = create_memory_retrieval_record(
+            manual_text,
+            retrieval_results,
+            loop_id=active_loop_id,
+        )
     interpretation = interpret_signal(signal, prediction, loop_id=active_loop_id)
     evidence = assess_evidence_quality(
         signal,
@@ -126,11 +137,17 @@ def run_manual_text_loop(
     memory_inputs = [
         prediction,
         signal,
-        interpretation,
-        evidence,
-        uncertainty_gate,
-        belief_result,
     ]
+    if memory_retrieval is not None:
+        memory_inputs.append(memory_retrieval)
+    memory_inputs.extend(
+        [
+            interpretation,
+            evidence,
+            uncertainty_gate,
+            belief_result,
+        ]
+    )
     if abstention_result is not None:
         memory_inputs.append(abstention_result)
     memory_inputs.append(action_result)
@@ -154,6 +171,7 @@ def run_manual_text_loop(
     return {
         "prediction": prediction,
         "signal": signal,
+        "memory_retrieval": memory_retrieval,
         "interpretation": interpretation,
         "evidence": evidence,
         "uncertainty_gate": uncertainty_gate,

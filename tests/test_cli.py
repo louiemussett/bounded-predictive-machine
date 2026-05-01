@@ -52,6 +52,7 @@ def test_cli_output_includes_expected_record_keys() -> None:
     assert set(parsed) == {
         "prediction",
         "signal",
+        "memory_retrieval",
         "interpretation",
         "evidence",
         "uncertainty_gate",

@@ -22,7 +22,12 @@ def main(argv: list[str] | None = None) -> int:
             status="current",
             uncertainty=["CLI prior belief is minimal"],
         )
-        loop_result = run_manual_text_loop(args.manual_text, prior_belief)
+        loop_result = run_manual_text_loop(
+            args.manual_text,
+            prior_belief,
+            use_memory=args.use_memory,
+            trace_dir=args.trace_dir,
+        )
         if args.save:
             save_loop_result_jsonl(loop_result)
         if args.summary:
@@ -66,6 +71,12 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="persist loop records to JSONL files under traces/",
     )
+    run_once.add_argument(
+        "--use-memory",
+        action="store_true",
+        help="retrieve local prior trace records as context",
+    )
+    run_once.add_argument("--trace-dir", default="traces", help="trace directory")
 
     memory_search = subparsers.add_parser(
         "memory-search",
